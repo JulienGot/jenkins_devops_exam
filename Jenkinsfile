@@ -149,9 +149,6 @@ stage('Deploiement en staging'){
                 '''
                 }
             }
-                                                                                                                          }
-
+       }                                                                                                       
+  }
 }
-}
-       
-
