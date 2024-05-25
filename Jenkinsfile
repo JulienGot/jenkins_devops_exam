@@ -113,7 +113,7 @@ pipeline {
                         rm -Rf .kube
                         mkdir .kube
                         cat $KUBECONFIG > .kube/config
-                        cp fastapi/values-prod.yaml values.yml
+                        cp castmovie/values-prod.yaml values.yml
                         sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                         helm upgrade --install app ./castmovie --values=values.yml --namespace prod
                     '''
