@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        docker run -d -p 8080:80 --name jenkins_$BUILD_ID $DOCKER_ID/$DOCKER_IMAGE_MOVIE_SERVICE:$DOCKER_TAG
+                        docker run -d -p 8081:80 --name jenkins_$BUILD_ID $DOCKER_ID/$DOCKER_IMAGE_MOVIE_SERVICE:$DOCKER_TAG
                         sleep 10
                     '''
                 }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        curl localhost:8080
+                        curl localhost:8081
                     '''
                 }
             }
