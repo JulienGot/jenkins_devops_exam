@@ -87,7 +87,7 @@ pipeline {
         }
 
  
-        stage('Deploy to Staging') {
+        /* stage('Deploy to Staging') {
             steps {
                 script {
                     sh '''
@@ -100,7 +100,7 @@ pipeline {
                     '''
                 }
             }
-        }
+        }*/
 
         stage('Deploy to Prod') {
             steps {
