@@ -64,14 +64,29 @@ pipeline {
                         rm -Rf .kube
                         mkdir .kube
                         cat $KUBECONFIG > .kube/config
-                        cp castmovie/values.yaml values.yml
+                        cp castmovie/values-dev.yaml values.yml
                         sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                         helm upgrade --install my-app ./castmovie --values=values.yml --namespace dev
                     '''
                 }
             }
         }
+        stage('Deploy to QA') {
+            steps {
+                script {
+                    sh '''
+                        rm -Rf .kube
+                        mkdir .kube
+                        cat $KUBECONFIG > .kube/config
+                        cp castmovie/values-qa.yaml values.yml
+                        sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                        helm upgrade --install my-app ./castmovie --values=values.yml --namespace qa
+                    '''
+                }
+            }
+        }
 
+ 
         stage('Deploy to Staging') {
             steps {
                 script {
@@ -79,9 +94,9 @@ pipeline {
                         rm -Rf .kube
                         mkdir .kube
                         cat $KUBECONFIG > .kube/config
-                        cp fastapi/values.yaml values.yml
+                        cp castmovie/values-staging.yaml values.yml
                         sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                        helm upgrade --install app fastapi --values=values.yml --namespace staging
+                        helm upgrade --install app ./castmovie --values=values.yml --namespace staging
                     '''
                 }
             }
@@ -98,9 +113,9 @@ pipeline {
                         rm -Rf .kube
                         mkdir .kube
                         cat $KUBECONFIG > .kube/config
-                        cp fastapi/values.yaml values.yml
+                        cp fastapi/values-prod.yaml values.yml
                         sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                        helm upgrade --install app fastapi --values=values.yml --namespace prod
+                        helm upgrade --install app ./castmovie --values=values.yml --namespace prod
                     '''
                 }
             }
