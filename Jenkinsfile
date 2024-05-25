@@ -95,7 +95,11 @@ pipeline {
                         mkdir .kube
                         cat $KUBECONFIG > .kube/config
                         cp castmovie/values-staging.yaml values.yml
-                        sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                        echo "Fichier values.yml avant modification:"
+			cat values.yml
+			sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+ 			echo "Fichier values.yml après modification:"
+			cat values.yml 
                         helm upgrade --install app ./castmovie --values=values.yml --namespace staging
                     '''
                 }
