@@ -2,7 +2,7 @@ movieService:
   image: "juliengot/movie-service:latest"
   servicePort: 8001
   environment:
-          DATABASE_URI: postgresql://movie_db_username:$(POSTGRES_PASSWORD)@movie_db/movie_db_staging
+    DATABASE_URI: postgresql://movie_db_username:$(POSTGRES_PASSWORD)@movie_db/movie_db_staging
     CAST_SERVICE_HOST_URL: http://cast_service:8000/api/v1/casts/
 
 movieDb:
