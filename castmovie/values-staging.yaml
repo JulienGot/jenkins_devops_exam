@@ -2,7 +2,7 @@ movieService:
   image: "juliengot/movie-service:latest"
   servicePort: 8001
   environment:
-    DATABASE_URI: postgresql://movie_db_username:movie_db_password@movie_db/movie_db_staging
+          DATABASE_URI: postgresql://movie_db_username:$(POSTGRES_PASSWORD)@movie_db/movie_db_staging
     CAST_SERVICE_HOST_URL: http://cast_service:8000/api/v1/casts/
 
 movieDb:
@@ -10,21 +10,29 @@ movieDb:
     repository: postgres
     tag: 12.1-alpine
   postgresUser: movie_db_username
-  postgresPassword: movie_db_password
+  postgresPassword:
+    valueFrom:
+      secretKeyRef:
+        name: postgre-rootpass
+        key: password
   postgresDatabase: movie_db_staging
 
 castService:
   image: "juliengot/movie-service:latest"
   servicePort: 8002
   environment:
-    DATABASE_URI: postgresql://cast_db_username:cast_db_password@cast_db/cast_db_staging
+    DATABASE_URI: postgresql://cast_db_username:$(POSTGRES_PASSWORD)@cast_db/cast_db_staging
 
 castDb:
   image:
     repository: postgres
     tag: 12.1-alpine
   postgresUser: cast_db_username
-  postgresPassword: cast_db_password
+  postgresPassword:
+    valueFrom:
+      secretKeyRef:
+        name: postgre-rootpass
+        key: password
   postgresDatabase: cast_db_staging
 
 nginx:
